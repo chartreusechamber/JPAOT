@@ -22,14 +22,14 @@ SMODS.Blind {
 }
 
 SMODS.Blind {
-    key = "jp_mole",
+    key = "mole",
     dollars = 8,
     mult = 2,
     boss = { showdown = true },
     boss_colour = HEX("A61A1F"),
 
     atlas = "blinds",
-    pos = { x = 0, y = 0 },
+    pos = { x = 0, y = 1 },
 
     calculate = function(self, blind, context)
         if context.nflame_post_shuffle and not blind.disabled then
@@ -47,3 +47,120 @@ SMODS.Blind {
         G.deck.cards:shuffle("nflame_mole")
     end
 }
+
+SMODS.Blind {
+    key = "beaver",
+    dollars = 8,
+    mult = 2,
+    boss = { showdown = true },
+    boss_colour = HEX("A61A1F"),
+
+    atlas = "blinds",
+    pos = { x = 0, y = 2 },
+
+    calculate = function(self, blind, context)
+       
+    end,
+
+    disable = function(self)
+      
+    end
+}
+
+SMODS.Blind {
+    key = "frog",
+    dollars = 8,
+    mult = 2,
+    boss = { showdown = true },
+    boss_colour = HEX("71569d"),
+
+    atlas = "blinds",
+    pos = { x = 0, y = 3 },
+
+    calculate = function(self, blind, context)
+       
+    end,
+
+    disable = function(self)
+      
+    end
+}
+
+SMODS.Blind {
+    key = "polarbear",
+    dollars = 8,
+    mult = 2,
+    boss = { showdown = true },
+    boss_colour = HEX("634d84"),
+
+    atlas = "blinds",
+    pos = { x = 0, y = 4 },
+
+    calculate = function(self, blind, context)
+       
+    end,
+
+    disable = function(self)
+      
+    end
+}
+
+SMODS.Blind {
+    key = "sappy",
+    dollars = 8,
+    mult = 2,
+    boss = { showdown = true },
+    boss_colour = HEX("d8de3e"),
+
+    atlas = "blinds",
+    pos = { x = 0, y = 5 },
+
+    calculate = function(self, blind, context)
+       
+    end,
+
+    disable = function(self)
+      
+    end
+}
+
+SMODS.Blind {
+    key = "samson",
+    dollars = 8,
+    mult = 2,
+    boss = { showdown = true },
+    boss_colour = HEX("fca656"),
+
+    atlas = "blinds",
+    pos = { x = 0, y = 6 },
+
+    calculate = function(self, blind, context)
+       
+    end,
+
+    disable = function(self)
+      
+    end
+}
+
+
+
+SMODS.Blind {
+    key = "emmy",
+    dollars = 8,
+    mult = 2,
+    boss = { showdown = true },
+    boss_colour = HEX("b2889c"),
+
+    atlas = "blinds",
+    pos = { x = 0, y = 7 },
+
+    calculate = function(self, blind, context)
+       
+    end,
+
+    disable = function(self)
+      
+    end
+}
+
