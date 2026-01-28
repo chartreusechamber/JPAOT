@@ -26,7 +26,7 @@ SMODS.Blind {
     dollars = 8,
     mult = 2,
     boss = { showdown = true },
-    boss_colour = HEX("A61A1F"),
+    boss_colour = HEX("B88828"),
 
     atlas = "blinds",
     pos = { x = 0, y = 1 },
@@ -70,7 +70,7 @@ SMODS.Blind {
 SMODS.Blind {
     key = "frog",
     dollars = 8,
-    mult = 2,
+    mult = 1.5,
     boss = { showdown = true },
     boss_colour = HEX("71569d"),
 
@@ -81,28 +81,42 @@ SMODS.Blind {
        
     end,
 
-    disable = function(self)
-      
-    end
+    debuff_hand = function(self, cards, hand, handname, check)
+        if G.GAME.current_round.hands_left = 0 then 
+            return true 
+        end
+    end,
+
+
 }
 
-SMODS.Blind {
+-- Currently broken, halves your entire score if hand hand contains an unscored card. 
+SMODS.Blind{
     key = "polarbear",
     dollars = 8,
     mult = 2,
     boss = { showdown = true },
     boss_colour = HEX("634d84"),
-
     atlas = "blinds",
     pos = { x = 0, y = 4 },
 
     calculate = function(self, blind, context)
-       
+        -- only in scoring contexts where these exist
+        if context.scoring_hand and context.full_hand then
+            if #context.scoring_hand < #context.full_hand then
+                G.GAME.blind.effect = G.GAME.blind.effect or {}
+                G.GAME.blind.effect.polarbear = true
+            end
+        end
+
     end,
 
     disable = function(self)
-      
-    end
+        if G.GAME and G.GAME.blind and G.GAME.blind.effect then
+            G.GAME.blind.effect.polarbear = nil
+        end
+    end,
+
 }
 
 SMODS.Blind {
