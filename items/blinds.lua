@@ -82,7 +82,7 @@ SMODS.Blind {
     end,
 
     debuff_hand = function(self, cards, hand, handname, check)
-        if G.GAME.current_round.hands_left = 0 then 
+        if G.GAME.current_round.hands_left == 0 then 
             return true 
         end
     end,
