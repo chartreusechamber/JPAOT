@@ -82,7 +82,7 @@ SMODS.Blind {
     end,
 
     debuff_hand = function(self, cards, hand, handname, check)
-        if G.GAME.current_round.hands_left = 0 then 
+        if G.GAME.current_round.hands_left == 0 then 
             return true 
         end
     end,
@@ -159,22 +159,56 @@ SMODS.Blind {
 
 
 
-SMODS.Blind {
-    key = "emmy",
+SMODS.Blind{
+    key = 'emmy',
     dollars = 8,
     mult = 2,
     boss = { showdown = true },
     boss_colour = HEX("b2889c"),
-
     atlas = "blinds",
     pos = { x = 0, y = 7 },
 
-    calculate = function(self, blind, context)
-       
+    -- Save the starting chip requirement when the blind is set
+    set_blind = function(self, reset, silent)
+        if not reset then
+            G.GAME.emmy_startchips = G.GAME.blind.chips
+        end
     end,
 
-    disable = function(self)
-      
-    end
-}
+    -- Optional: clean up when disabled
+    disable = function()
+        G.GAME.emmy_startchips = nil
+    end,
 
+    calculate = function(self, blind, context)
+        -- Run once per scoring card
+        if context.individual 
+           and context.cardarea == G.play
+           and context.other_card
+           and not blind.disabled
+        then
+
+            local has_enhancement =
+                context.other_card.ability 
+                and context.other_card.ability.set == 'Enhanced'
+
+           
+            local has_seal = context.other_card.seal ~= nil
+
+          
+            local has_edition = context.other_card.edition ~= nil
+
+            if has_enhancement or has_seal or has_edition then
+              
+                local base = G.GAME.emmy_startchips or G.GAME.blind.chips
+                local inc  = math.floor(base * 0.25)
+                if inc < 1 then inc = 1 end
+
+                G.GAME.blind.chips = G.GAME.blind.chips + inc
+                G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+                G.HUD_blind:recalculate(true)
+                G.GAME.blind:wiggle()
+            end
+        end
+    end,
+}

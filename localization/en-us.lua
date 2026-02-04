@@ -68,8 +68,8 @@ return {
             bl_jpaot_emmy = {
                 name = "Blueberry Bird",
                 text = {
-                    "+x#1# Blind Requirement per",
-                    "modifed card in full deck"
+                    "+x0.25 Blind Requirement when",
+                    "a modifed card is played"
                 }
             },
 
