@@ -1,3 +1,5 @@
+
+
 SMODS.Blind {
     key = "jpenguin",
     dollars = 8,
@@ -85,16 +87,71 @@ SMODS.Blind {
     mult = 2,
     boss = { showdown = true },
     boss_colour = HEX("A61A1F"),
-
     atlas = "blinds",
     pos = { x = 0, y = 2 },
 
-    calculate = function(self, blind, context)
+   loc_vars = function(self)
+        -- 1. Find the ID with the highest play count
+        local target_id = 14 -- Default to Ace
+        local highest_count = -1
+
        
+        if G.GAME.most_played_ranks then
+            for id, count in pairs(G.GAME.most_played_ranks) do
+                if count > highest_count then
+                    highest_count = count
+                    target_id = id
+                elseif count == highest_count then
+                    -- Tie-breaker: prefer the higher rank
+                    if id > target_id then target_id = id end
+                end
+            end
+        end
+
+ 
+        local target_rank_name = 'Ace'
+        
+      
+        for key, rank_obj in pairs(SMODS.Ranks) do
+            if rank_obj.id == target_id then
+                target_rank_name = key
+                break
+            end
+        end
+
+        -- 3. Save target ID for the debuff logic
+        self.beaver_target_id = target_id
+
+        -- 4. Return localized name
+        return { vars = { localize(target_rank_name, 'ranks') } }
+    end,
+
+    debuff_hand = function(self, cards, hand, handname, check)
+      
+        local target_id = self.beaver_target_id or 14
+        
+        if cards then
+            local found_target = false
+            
+           
+            for k, v in ipairs(cards) do
+                if v:get_id() == target_id then
+                    found_target = true
+                    break
+                end
+            end
+
+    
+            if found_target then
+                return false
+            else
+                return true
+            end
+        end
     end,
 
     disable = function(self)
-      
+        self.beaver_target_id = nil
     end
 }
 
