@@ -1,6 +1,7 @@
 
 local files = {
     "lib/atlas",
+    "lib/sounds",
 	  "items/blinds",
     "items/globals",
     "items/jokers",
