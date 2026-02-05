@@ -21,6 +21,7 @@ SMODS.Blind {
     end
 }
 
+--blinds.lua
 SMODS.Blind {
     key = "mole",
     dollars = 8,
@@ -32,21 +33,86 @@ SMODS.Blind {
     pos = { x = 0, y = 1 },
 
     calculate = function(self, blind, context)
-        if context.nflame_post_shuffle and not blind.disabled then
-            return {
-                sort = function(a, b)
-                    return (a.ability.nflame_scoredcount or 0) > (b.ability.nflame_scoredcount or 0)
-                end,
-                priority = 0,
-                debug = "woawow"
-            }
-        end
+     
     end,
 
     disable = function(self)
-        G.deck.cards:shuffle("nflame_mole")
+    G.deck:shuffle('nr'..G.GAME.round_resets.ante)
     end
 }
+
+local old_shuffle = CardArea.shuffle
+
+function CardArea:shuffle(_seed)
+    local result = old_shuffle(self, _seed)
+
+    -- Only do anything if Mole is the current blind and not disabled
+    if not (G and G.GAME and G.GAME.blind and G.GAME.blind.config
+        and G.GAME.blind.config.blind
+        and G.GAME.blind.config.blind.key == "bl_jpaot_mole"
+        and not G.GAME.blind.disabled) then
+        return result
+    end
+
+    -- Only reorder the main deck, not hand/discard/etc
+    if self ~= G.deck then
+        return result
+    end
+
+    if not G.GAME.most_played_stats then
+        return result
+    end
+
+    -- Find the maximum play count
+    local best = 0
+    for key, count in pairs(G.GAME.most_played_stats) do
+        if count > best then
+            best = count
+        end
+    end
+    if best <= 0 then
+        return result
+    end
+
+    -- All rank+suit keys tied for max become "most played"
+    local targets = {}
+    for key, count in pairs(G.GAME.most_played_stats) do
+        if count == best then
+            targets[key] = true
+        end
+    end
+
+    -- Split deck into keep vs push-to-bottom
+    local keep = {}
+    local bottom = {}
+
+    for i = 1, #self.cards do
+        local c = self.cards[i]
+        local move = false
+
+        if c.base and c.base.suit and c.base.rank then
+            local k = c.base.suit .. "_" .. c.base.rank
+            if targets[k] then
+                move = true
+            end
+        end
+
+        if move then
+            bottom[#bottom + 1] = c
+        else
+            keep[#keep + 1] = c
+        end
+    end
+
+    -- Rebuild: first all non-most-played, then all most-played
+    self.cards = keep
+    for i = 1, #bottom do
+        self.cards[#self.cards + 1] = bottom[i]
+    end
+
+    return result
+end
+
 
 SMODS.Blind {
     key = "beaver",
