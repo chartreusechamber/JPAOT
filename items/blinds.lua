@@ -125,6 +125,9 @@ SMODS.Blind {
         -- 4. Return localized name
         return { vars = { localize(target_rank_name, 'ranks') } }
     end,
+     collection_loc_vars = function(self)
+        return { vars = { '[most played rank]' } }
+    end,
 
     debuff_hand = function(self, cards, hand, handname, check)
       
@@ -178,7 +181,7 @@ SMODS.Blind {
 
 }
 
-
+-- bear
 SMODS.Blind{
     key = "polarbear",
     dollars = 8,
@@ -188,7 +191,7 @@ SMODS.Blind{
     atlas = "blinds",
     pos = { x = 0, y = 4 },
 
-calculate = function(self, blind, context)
+    calculate = function(self, blind, context)
      
         if context.final_scoring_step and not blind.disabled then
             
@@ -216,6 +219,7 @@ calculate = function(self, blind, context)
     end,
 }
 
+-- sappy
 SMODS.Blind {
     key = "sappy",
     dollars = 8,
@@ -235,27 +239,66 @@ SMODS.Blind {
     end
 }
 
+--
 SMODS.Blind {
     key = "samson",
     dollars = 8,
     mult = 2,
     boss = { showdown = true },
     boss_colour = HEX("fca656"),
-
     atlas = "blinds",
     pos = { x = 0, y = 6 },
-
+     loc_vars = function(self)
+        local numerator, denominator = SMODS.get_probability_vars(self, 1, 4, 'jpaot_samson')
+        return { vars = { numerator, denominator } }
+    end,
+    collection_loc_vars = function(self)
+        return { vars = { '1', "4"} }
+    end,
     calculate = function(self, blind, context)
-       
+        if not blind.disabled then
+        
+            if G.GAME.dollars < 0 then
+                if context.modify_scoring_hand then 
+                    if  SMODS.pseudorandom_probability(blind, 'jpaot_samson', 1, 4) then
+                        return { remove_from_hand = true }
+                    end
+                end
+            end
+
+        
+            if context.individual and context.cardarea == G.play then
+            
+                if not context.other_card.debuff then
+                    
+                
+                   if #G.hand.cards > 0 then
+                        -- FIX: Add '.. context.other_card.unique_val' to the seed.
+                        -- This ensures that if you play 5 cards, each one rolls for a DIFFERENT target
+                        -- instead of all of them targeting the same card because the seed was identical.
+                        local discard_target = pseudorandom_element(G.hand.cards, 'samson_cut' .. context.other_card.unique_val)
+                        
+                        draw_card(G.hand, G.discard, 90, 'down', nil, discard_target)
+                        
+                        ease_dollars(-3)
+                        
+                        return {
+                            message = "Sacrifice!",
+                            colour = G.C.MONEY,
+                            card = context.other_card
+                        }
+                    end
+                end
+            end
+        end
     end,
 
     disable = function(self)
-      
     end
 }
 
 
-
+--emmy
 SMODS.Blind{
     key = 'emmy',
     dollars = 8,

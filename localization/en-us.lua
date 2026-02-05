@@ -76,7 +76,11 @@ return {
              bl_jpaot_samson = {
                 name = "Butterscotch Bugbear",
                 text = {
-                    "idk",
+                    "Discard a card in hand",
+                    "and lose $3 for every",
+                    "card scored",
+                    "Cards have a #1# in #2#",
+                    "chance to not score if in debt",
                 }
             },
         },
