@@ -121,7 +121,7 @@ SMODS.Blind {
 
 }
 
--- Currently broken, halves your entire score if hand hand contains an unscored card. 
+
 SMODS.Blind{
     key = "polarbear",
     dollars = 8,
@@ -131,23 +131,32 @@ SMODS.Blind{
     atlas = "blinds",
     pos = { x = 0, y = 4 },
 
-    calculate = function(self, blind, context)
-        -- only in scoring contexts where these exist
-        if context.scoring_hand and context.full_hand then
-            if #context.scoring_hand < #context.full_hand then
-                G.GAME.blind.effect = G.GAME.blind.effect or {}
-                G.GAME.blind.effect.polarbear = true
+calculate = function(self, blind, context)
+     
+        if context.final_scoring_step and not blind.disabled then
+            
+        
+            if context.full_hand and context.scoring_hand then
+                
+                if #context.full_hand > #context.scoring_hand then
+                    
+                    
+                    
+                    
+                    return {
+                        message = "Halved!",
+                        xmult = 0.5,
+                        remove_default_message = true,
+                        colour = G.C.RED
+                    }
+                end
             end
         end
-
     end,
+
 
     disable = function(self)
-        if G.GAME and G.GAME.blind and G.GAME.blind.effect then
-            G.GAME.blind.effect.polarbear = nil
-        end
     end,
-
 }
 
 SMODS.Blind {
