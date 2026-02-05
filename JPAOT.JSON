@@ -6,6 +6,7 @@
     "prefix": "jpaot",
     "main_file": "JPAOT.lua",
     "priority": 0,
+    "badge_colour": "74CCA8",
     "display_name": "Oh Boy! That Card Eating Green Scarf Wearing Penguin Jade Penguin Has Got Himself a Team of Animal Characters to Screw Over Your Runs Now! You Better Adapt To The Changes or You'll Be Toast! (Also There's Finity Support, So You Can Really Get To Know Their True Potential!)",
     "version": "0.0.1",
     "dependendencies": [
