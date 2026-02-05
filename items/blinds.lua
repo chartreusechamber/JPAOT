@@ -21,7 +21,6 @@ SMODS.Blind {
     end
 }
 
---blinds.lua
 SMODS.Blind {
     key = "mole",
     dollars = 8,
@@ -33,86 +32,52 @@ SMODS.Blind {
     pos = { x = 0, y = 1 },
 
     calculate = function(self, blind, context)
-     
+        -- Mole itself doesn’t need a per-context effect; everything is in globals
     end,
 
     disable = function(self)
-    G.deck:shuffle('nr'..G.GAME.round_resets.ante)
+        -- When Mole is disabled, reshuffle the deck normally
+        if G and G.deck and G.GAME and G.GAME.round_resets then
+            G.deck:shuffle('nr'..G.GAME.round_resets.ante)
+        end
     end
 }
 
-local old_shuffle = CardArea.shuffle
+local original_shuffle = CardArea.shuffle
 
 function CardArea:shuffle(_seed)
-    local result = old_shuffle(self, _seed)
+    local ret = original_shuffle(self, _seed)
 
-    -- Only do anything if Mole is the current blind and not disabled
-    if not (G and G.GAME and G.GAME.blind and G.GAME.blind.config
-        and G.GAME.blind.config.blind
-        and G.GAME.blind.config.blind.key == "bl_jpaot_mole"
-        and not G.GAME.blind.disabled) then
-        return result
-    end
+    if self == G.deck and G.GAME.blind and G.GAME.blind.config.blind.key == 'bl_jpaot_mole' and not G.GAME.blind.disabled then
+        
+        table.sort(self.cards, function(a, b)
+            local stats = G.GAME.most_played_stats or {}
 
-    -- Only reorder the main deck, not hand/discard/etc
-    if self ~= G.deck then
-        return result
-    end
-
-    if not G.GAME.most_played_stats then
-        return result
-    end
-
-    -- Find the maximum play count
-    local best = 0
-    for key, count in pairs(G.GAME.most_played_stats) do
-        if count > best then
-            best = count
-        end
-    end
-    if best <= 0 then
-        return result
-    end
-
-    -- All rank+suit keys tied for max become "most played"
-    local targets = {}
-    for key, count in pairs(G.GAME.most_played_stats) do
-        if count == best then
-            targets[key] = true
-        end
-    end
-
-    -- Split deck into keep vs push-to-bottom
-    local keep = {}
-    local bottom = {}
-
-    for i = 1, #self.cards do
-        local c = self.cards[i]
-        local move = false
-
-        if c.base and c.base.suit and c.base.rank then
-            local k = c.base.suit .. "_" .. c.base.rank
-            if targets[k] then
-                move = true
+            local function get_count(c)
+                -- MUST MATCH TRACKER KEY (Suit + ID)
+                if c.base and c.base.suit and c.base.id then
+                    local key = c.base.suit .. "_" .. c.base.id
+                    return stats[key] or 0
+                end
+                return -1 
             end
-        end
 
-        if move then
-            bottom[#bottom + 1] = c
-        else
-            keep[#keep + 1] = c
-        end
+            local count_a = get_count(a)
+            local count_b = get_count(b)
+
+            -- LOGIC:
+            -- count_a > count_b means A has MORE plays than B.
+            -- Sorting A before B (True) puts A at Index 1.
+            -- Index 1 is the BOTTOM of the deck (Drawn last).
+            -- Index 52 is the TOP of the deck (Drawn first).
+            return count_a > count_b
+        end)
+        
+        G.GAME.blind:wiggle()
     end
 
-    -- Rebuild: first all non-most-played, then all most-played
-    self.cards = keep
-    for i = 1, #bottom do
-        self.cards[#self.cards + 1] = bottom[i]
-    end
-
-    return result
+    return ret
 end
-
 
 SMODS.Blind {
     key = "beaver",
