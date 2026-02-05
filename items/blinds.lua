@@ -201,7 +201,7 @@ calculate = function(self, blind, context)
                     
                     
                     return {
-                        sound = 'qpb_divide',
+                        sound = 'jpaot_qpb_divide',
                         message = "Halved!",
                         xmult = 0.5,
                         remove_default_message = true,
