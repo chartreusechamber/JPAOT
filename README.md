@@ -16,7 +16,7 @@ Requires Steamodded [smods-1.0.0-beta-1016c](https://github.com/Steamodded/smods
 As of now, there is currently crossmod content with [Finity](https://github.com/frangnosquest/Finity)! Partner crossmod coming soon?
 
 ### Credits
-- chartreusechamber - The main penguin!
-- Camostar34 - Main coder and Joker Artist 
-- candycaneanniahlator(etherware2) - Jade Penguin effect + general coding help 
+- [chartreusechamber](https://balatromods.miraheze.org/wiki/User:JPenguin) - The main penguin!
+- [Camostar34](https://balatromods.miraheze.org/wiki/User:Camostar34) - Main coder and Joker Artist 
+- [candycaneanniahlator(etherware2)](https://balatromods.miraheze.org/wiki/User:Candycanearter07) - Jade Penguin effect + general coding help 
 
