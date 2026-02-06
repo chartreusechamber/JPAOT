@@ -1,9 +1,7 @@
-SMODS.Sound ({
-    key = 'jp_consume',
-    path = 'jp_consume.ogg',
-    pitch = 1,
-})
-
+-- I have no idea how other mods did this, so I am just copying from Neonflame. 
+local smaps = {}
+local quips = {}
+local decks = {}
 
 
 SMODS.Joker {
@@ -50,7 +48,10 @@ SMODS.Joker {
         end
 
         if context.joker_main or context.force_trigger then return { xmult = card.ability.extra.xm } end
-    end
+    end,
+    set_badges = function (self, card, badges)
+        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
+    end,
 }
 
 
@@ -90,7 +91,10 @@ SMODS.Joker {
         if context.joker_main then
             return { xmult = card.ability.extra.xm}
         end
-    end
+    end,
+    set_badges = function (self, card, badges)
+        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
+    end,
 }
 
 SMODS.Joker {
@@ -186,7 +190,10 @@ SMODS.Joker {
                 end
             end
         end
-    end
+    end,
+    set_badges = function (self, card, badges)
+        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
+    end,
 }
 
 SMODS.Joker {
@@ -227,7 +234,10 @@ SMODS.Joker {
             card.ability.extra.handcount = card.ability.extra.handcount + 1
         end
 
-    end
+    end,
+    set_badges = function (self, card, badges)
+        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
+    end,
 }
 
 SMODS.Joker {
@@ -287,7 +297,10 @@ SMODS.Joker {
             return {xchips = card.ability.extra.xc}
         end
 
-    end
+    end,
+    set_badges = function (self, card, badges)
+        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
+    end,
 }
 
 SMODS.Joker {
@@ -319,7 +332,10 @@ SMODS.Joker {
             end
         end
 
-    end
+    end,
+    set_badges = function (self, card, badges)
+        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
+    end,
 }
 
 SMODS.Joker {
@@ -345,7 +361,10 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-    end
+    end,
+    set_badges = function (self, card, badges)
+        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
+    end,
 }
 
 SMODS.Joker {
@@ -371,5 +390,61 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-    end
+    end,
+    set_badges = function (self, card, badges)
+        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
+    end,
 }
+
+
+
+smaps.bl_jpaot_jpenguin = {"j_jpaot_jpenguin", "Jade Penguin"} -- This is the key and name of the joker that is assosiated with the blind.
+quips.bl_jpaot_jpenguin = {"jpenguin", 4, 3} -- This is the key for quips. first and second number are the amount of game over and endless quips respectively.
+decks.bl_jpaot_jpenguin = {"jpaot_backs", { x = 0, y = 0 }}
+
+-- Quips are in the localization folder. 
+
+smaps.bl_jpaot_mole = {"j_jpaot_mole", "Maroon Mole"}
+quips.bl_jpaot_mole = {"mole", 4, 3}
+decks.bl_jpaot_mole = {"jpaot_backs", { x = 1, y = 0 }}
+
+
+smaps.bl_jpaot_beaver = {"j_jpaot_beaver", "Brass Beaver"}
+quips.bl_jpaot_beaver = {"beaver", 4, 4}
+decks.bl_jpaot_beaver = {"jpaot_backs", { x = 2, y = 0 }}
+
+smaps.bl_jpaot_frog = {"j_jpaot_frog", "Fandango Frog"}
+quips.bl_jpaot_frog = {"frog", 4, 4}
+decks.bl_jpaot_frog = {"jpaot_backs", { x = 3, y = 0 }}
+
+smaps.bl_jpaot_polarbear = {"j_jpaot_polarbear", "Quartz Polar Bear"}
+quips.bl_jpaot_polarbear = {"bear", 3, 1}
+decks.bl_jpaot_polarbear = {"jpaot_backs", { x = 4, y = 0 }}
+
+smaps.bl_jpaot_sappy = {"j_jpaot_sappy", "Honey Hedgehog"}
+quips.bl_jpaot_sappy = {"sappy", 3, 6}
+decks.bl_jpaot_sappy = {"jpaot_backs", { x = 5, y = 0 }}
+
+smaps.bl_jpaot_samson = {"j_jpaot_samson", "Butterscotch Bugbear"}
+quips.bl_jpaot_samson = {"samson", 6, 6}
+decks.bl_jpaot_samson = {"jpaot_backs", { x = 0, y = 1 }}
+
+smaps.bl_jpaot_emmy = {"j_jpaot_emmy", "Blueberry Bird"}
+quips.bl_jpaot_emmy = {"emmy", 4, 6}
+decks.bl_jpaot_emmy = {"jpaot_backs", { x = 1, y = 1 }}
+
+
+
+
+FinisherBossBlindStringMap = FinisherBossBlindStringMap or {}
+FinisherBossBlindQuips = FinisherBossBlindQuips or {}
+FinisherBossBlinddecksprites = FinisherBossBlinddecksprites or {}
+
+-- im desperate man
+local mmref = Game.main_menu
+function Game.main_menu(self, change_context)
+    for k, v in pairs(smaps) do FinisherBossBlindStringMap[k] = v end
+    for k, v in pairs(quips) do FinisherBossBlindQuips[k] = v end
+    for k, v in pairs(decks) do FinisherBossBlinddecksprites[k] = v end
+    return mmref(self, change_context)
+end
