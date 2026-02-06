@@ -101,50 +101,47 @@ return {
              j_jpaot_mole = {
                 name = "Maroon Mole",
                 text = {
-                    "Played and {C:attention}unscoring{} cards have a",
-                    "{C:green}#1# in #2#{} chance to be {C:red}destroyed",
-                    "Gain a tenth of its rank as {C:white,X:mult}XMult",
-                    "{s:0.8,C:inactive}(Currently {s:0.8,C:white,X:mult}X#3#{s:0.8,C:inactive} Mult)"
+                    "{X:mult,C:white}X#2#{} Mult",
+                    "Gains {X:mult,C:white}X#1#{} Mult",
+                    "per card {C:attention}discarded{}",
                 }
             },
 
              j_jpaot_beaver = {
                 name = "Brass Beaver",
                 text = {
-                    "Played and {C:attention}unscoring{} cards have a",
-                    "{C:green}#1# in #2#{} chance to be {C:red}destroyed",
-                    "Gain a tenth of its rank as {C:white,X:mult}XMult",
-                    "{s:0.8,C:inactive}(Currently {s:0.8,C:white,X:mult}X#3#{s:0.8,C:inactive} Mult)"
+                    "Retrigger every scored {C:attention}#1#{}",
+                    "for every {C:attention}#1#{} in played hand",
+                    "{s:0.8,C:attention}Rank{} {s:0.8}is your most played rank"
                 }
             },
 
             j_jpaot_frog = {
                 name = "Fandango Frog",
                 text = {
-                    "Played and {C:attention}unscoring{} cards have a",
-                    "{C:green}#1# in #2#{} chance to be {C:red}destroyed",
-                    "Gain a tenth of its rank as {C:white,X:mult}XMult",
-                    "{s:0.8,C:inactive}(Currently {s:0.8,C:white,X:mult}X#3#{s:0.8,C:inactive} Mult)"
+                    "{X:purple,C:white}X#1#{} Chips and Mult,",
+                    "then gives {X:mult,C:white}X#2#{} Mult",
+                    "per hands played this round",
+                    "on {C:attention}final hand{} instead"
                 }
             },
           
              j_jpaot_polarbear = {
                 name = "Quartz Polar Bear",
                 text = {
-                    "Played and {C:attention}unscoring{} cards have a",
-                    "{C:green}#1# in #2#{} chance to be {C:red}destroyed",
-                    "Gain a tenth of its rank as {C:white,X:mult}XMult",
-                    "{s:0.8,C:inactive}(Currently {s:0.8,C:white,X:mult}X#3#{s:0.8,C:inactive} Mult)"
+                    "If all played cards are scoring,",
+                    "Gains a {C:attention}tenth{} of a random played card's",
+                    "rank as {X:chips,C:white}xChips{}",
+                    "{C:inactive}(Currently {C:white,X:chips}X#1#{C:inactive} Chips)"
                 }
             },
 
             j_jpaot_samson = {
                 name = "Butterscotch Bugbear",
                 text = {
-                    "Played and {C:attention}unscoring{} cards have a",
-                    "{C:green}#1# in #2#{} chance to be {C:red}destroyed",
-                    "Gain a tenth of its rank as {C:white,X:mult}XMult",
-                    "{s:0.8,C:inactive}(Currently {s:0.8,C:white,X:mult}X#3#{s:0.8,C:inactive} Mult)"
+                    "Scored cards have a {C:green}#1# in #2#{}",
+                    "chance to {C:attention}retrigger{} for for every",
+                    "{C:money}$#3#{} you have",
                 }
             },
            

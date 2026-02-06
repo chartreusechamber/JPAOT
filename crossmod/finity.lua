@@ -62,7 +62,7 @@ SMODS.Joker {
     pos = { x = 2, y = 0 },
     soul_pos = { x = 3, y = 0 },
 
-    config = { extra = { chance = 3, xm = 1 } },
+    config = { extra = { scaling = 0.1, xm = 1 } },
     rarity = "finity_showdown",
     cost = 10,
     blueprint_compat = true,
@@ -72,11 +72,24 @@ SMODS.Joker {
 
     loc_vars = function(self, info_queue, card)
 		local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jpenguin")
-        return { vars = {num, den, card.ability.extra.xm} }
+        return { vars = {card.ability.extra.scaling, card.ability.extra.xm} }
     end,
 
     calculate = function(self, card, context)
+        if context.discard and not context.blueprint then
+			SMODS.scale_card(card, {
+				ref_table = card.ability.extra,
+				ref_value = "xm",
+				scalar_value = "scaling",
+                message_key = "a_xmult",
+				message_colour = G.C.MULT,
+			})
+			return nil, true
+        end
 
+        if context.joker_main then
+            return { xmult = card.ability.extra.xm}
+        end
     end
 }
 
@@ -94,15 +107,85 @@ SMODS.Joker {
     blueprint_compat = true,
     eternal_compat = true,
     perishable_compat = true,
-    demicolon_compat = true,
+    demicolon_compat = false,
 
     loc_vars = function(self, info_queue, card)
-		local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jpenguin")
-        return { vars = {num, den, card.ability.extra.xm} }
+        -- 1. Find the ID with the highest play count
+        local target_id = 14 -- Default to Ace
+        local highest_count = -1
+
+       
+        if G.GAME.most_played_ranks then
+            for id, count in pairs(G.GAME.most_played_ranks) do
+                if count > highest_count then
+                    highest_count = count
+                    target_id = id
+                elseif count == highest_count then
+                    -- Tie-breaker: prefer the higher rank
+                    if id > target_id then target_id = id end
+                end
+            end
+        end
+
+ 
+        local target_rank_name = 'Ace'
+        
+      
+        for key, rank_obj in pairs(SMODS.Ranks) do
+            if rank_obj.id == target_id then
+                target_rank_name = key
+                break
+            end
+        end
+
+       
+        self.beaver_target_id = target_id
+
+       
+        return { vars = { localize(target_rank_name, 'ranks') } }
     end,
 
-    calculate = function(self, card, context)
+   calculate = function(self, card, context)
+       
+        if context.repetition and context.cardarea == G.play then
+            
+          
+            local target_id = 14
+            local highest_count = -1
+            if G.GAME.most_played_ranks then
+                for id, count in pairs(G.GAME.most_played_ranks) do
+                    if count > highest_count then
+                        highest_count = count
+                        target_id = id
+                    elseif count == highest_count then
+                        if id > target_id then target_id = id end
+                    end
+                end
+            end
 
+          
+            if context.other_card:get_id() == target_id then
+                
+              
+                local match_count = 0
+                if context.scoring_hand then
+                    for _, playing_card in ipairs(context.scoring_hand) do
+                        if playing_card:get_id() == target_id then
+                            match_count = match_count + 1
+                        end
+                    end
+                end
+
+               
+                if match_count > 0 then
+                    return {
+                        message = localize('k_again_ex'),
+                        repetitions = match_count,
+                        card = card
+                    }
+                end
+            end
+        end
     end
 }
 
@@ -114,7 +197,7 @@ SMODS.Joker {
     pos = { x = 6, y = 0 },
     soul_pos = { x = 7, y = 0 },
 
-    config = { extra = { chance = 3, xm = 1 } },
+    config = { extra = { drawback = 0.5, handper = 2, handcount = 0 } },
     rarity = "finity_showdown",
     cost = 10,
     blueprint_compat = true,
@@ -123,11 +206,26 @@ SMODS.Joker {
     demicolon_compat = true,
 
     loc_vars = function(self, info_queue, card)
-		local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jpenguin")
-        return { vars = {num, den, card.ability.extra.xm} }
+        return { vars = {card.ability.extra.drawback, card.ability.extra.handper} }
     end,
 
     calculate = function(self, card, context)
+
+        if context.joker_main and G.GAME.current_round.hands_left > 0 then
+                return {
+                    xchips = card.ability.extra.drawback,
+                    xmult = card.ability.extra.drawback,
+                }
+            end
+        if context.joker_main and G.GAME.current_round.hands_left == 0 then
+                 return {
+                    xmult = card.ability.extra.handper * card.ability.extra.handcount,
+                }
+        end
+
+        if context.initial_scoring_step then
+            card.ability.extra.handcount = card.ability.extra.handcount + 1
+        end
 
     end
 }
@@ -140,7 +238,7 @@ SMODS.Joker {
     pos = { x = 8, y = 0 },
     soul_pos = { x = 9, y = 0 },
 
-    config = { extra = { chance = 3, xm = 1 } },
+    config = { extra = {xc = 1, chipstoadd = 0,} },
     rarity = "finity_showdown",
     cost = 10,
     blueprint_compat = true,
@@ -149,11 +247,45 @@ SMODS.Joker {
     demicolon_compat = true,
 
     loc_vars = function(self, info_queue, card)
-		local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jpenguin")
-        return { vars = {num, den, card.ability.extra.xm} }
+
+        return { vars = {card.ability.extra.xc} }
     end,
 
     calculate = function(self, card, context)
+
+        
+        if context.initial_scoring_step then
+            if #context.full_hand == #context.scoring_hand then
+                
+                local random_card = pseudorandom_element(context.scoring_hand, pseudoseed('jpaot_polarbear'))
+                
+                local rank_to_add = math.max(0, random_card:get_id())
+
+                if rank_to_add > 0  then
+                
+                if random_card.debuff then
+                    SMODS.calculate_effect({ message = "Bummer...", colour = G.C.RED}, random_card)
+                else
+                SMODS.calculate_effect({ message = "Let's Rock!", colour = G.C.PURPLE}, random_card)
+                card.ability.extra.chipstoadd = rank_to_add/ 10
+                SMODS.scale_card(card, {
+                    ref_table = card.ability.extra,
+                    ref_value = "xc",
+                    scalar_value = "chipstoadd",
+                    message_key = "a_xchips",
+                    message_colour = G.C.CHIPS,
+                })
+                return nil, true
+
+            end
+        
+             end
+        end
+    end
+
+        if context.joker_main then
+            return {xchips = card.ability.extra.xc}
+        end
 
     end
 }
@@ -166,20 +298,26 @@ SMODS.Joker {
     pos = { x = 10, y = 0 },
     soul_pos = { x = 11, y = 0 },
 
-    config = { extra = { chance = 3, xm = 1 } },
+    config = { extra = { chance = 4, permoney = 10 } },
     rarity = "finity_showdown",
     cost = 10,
     blueprint_compat = true,
     eternal_compat = true,
     perishable_compat = true,
-    demicolon_compat = true,
+    demicolon_compat = false,
 
     loc_vars = function(self, info_queue, card)
-		local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jpenguin")
-        return { vars = {num, den, card.ability.extra.xm} }
+		local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jsamson")
+        return { vars = {num, den, card.ability.extra.permoney} }
     end,
 
     calculate = function(self, card, context)
+
+        if context.cardarea == G.play and context.repetition then
+            if SMODS.pseudorandom_probability(card, "jpaot_jpenguin", 1, card.ability.extra.chance) then
+                return {   repetitions = math.floor( G.GAME.dollars / card.ability.extra.permoney) }
+            end
+        end
 
     end
 }

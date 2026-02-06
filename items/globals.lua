@@ -16,7 +16,7 @@ mod.calculate = function(self, context)
                 
                 G.GAME.most_played_stats[mp_key] = (G.GAME.most_played_stats[mp_key] or 0) + 1
                 
-                print("Mole Trigger: " .. mp_key .. " | Total: " .. G.GAME.most_played_stats[mp_key])
+                --print("Mole Trigger: " .. mp_key .. " | Total: " .. G.GAME.most_played_stats[mp_key])
             end
 
            --beaver tracker, tracks rank
@@ -29,7 +29,7 @@ mod.calculate = function(self, context)
                 -- Save purely by ID number
                 G.GAME.most_played_ranks[id] = (G.GAME.most_played_ranks[id] or 0) + 1
                 
-                print("Beaver Trigger: Rank " .. id .. " | Total: " .. G.GAME.most_played_ranks[id])
+                --print("Beaver Trigger: Rank " .. id .. " | Total: " .. G.GAME.most_played_ranks[id])
             end
 
         end

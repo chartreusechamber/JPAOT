@@ -91,7 +91,7 @@ SMODS.Blind {
     pos = { x = 0, y = 2 },
 
    loc_vars = function(self)
-        -- 1. Find the ID with the highest play count
+        --Find the ID with the highest play count
         local target_id = 14 -- Default to Ace
         local highest_count = -1
 
@@ -119,10 +119,10 @@ SMODS.Blind {
             end
         end
 
-        -- 3. Save target ID for the debuff logic
+        -- Save target ID for the debuff logic
         self.beaver_target_id = target_id
 
-        -- 4. Return localized name
+        -- Return localized name
         return { vars = { localize(target_rank_name, 'ranks') } }
     end,
      collection_loc_vars = function(self)
@@ -274,9 +274,6 @@ SMODS.Blind {
                     
                 
                    if #G.hand.cards > 0 then
-                        -- FIX: Add '.. context.other_card.unique_val' to the seed.
-                        -- This ensures that if you play 5 cards, each one rolls for a DIFFERENT target
-                        -- instead of all of them targeting the same card because the seed was identical.
                         local discard_target = pseudorandom_element(G.hand.cards, 'samson_cut' .. context.other_card.unique_val)
                         
                         draw_card(G.hand, G.discard, 90, 'down', nil, discard_target)
@@ -284,7 +281,7 @@ SMODS.Blind {
                         ease_dollars(-3)
                         
                         return {
-                            message = "Sacrifice!",
+                            
                             colour = G.C.MONEY,
                             card = context.other_card
                         }
