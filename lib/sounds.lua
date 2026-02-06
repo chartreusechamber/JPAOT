@@ -8,3 +8,7 @@ SMODS.Sound ({
     path = 'jp_consume.ogg',
     pitch = 1,
 })
+SMODS.Sound ({
+    key = 'qpb_strum',
+    path = 'qpb_strum.ogg',
+})

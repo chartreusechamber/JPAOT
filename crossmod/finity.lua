@@ -276,7 +276,7 @@ SMODS.Joker {
                 if random_card.debuff then
                     SMODS.calculate_effect({ message = "Bummer...", colour = G.C.RED}, random_card)
                 else
-                SMODS.calculate_effect({ message = "Let's Rock!", colour = G.C.PURPLE}, random_card)
+                SMODS.calculate_effect({ sound = "jpaot_qpb_strum", message = "Let's Rock!", colour = G.C.PURPLE}, random_card)
                 card.ability.extra.chipstoadd = rank_to_add/ 10
                 SMODS.scale_card(card, {
                     ref_table = card.ability.extra,
