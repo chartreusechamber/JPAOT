@@ -88,7 +88,7 @@ SMODS.Joker {
     atlas = "jokers",
     pos = { x = 0, y = 0 },
     soul_pos = { x = 1, y = 0 },
-
+    discovered = true, 
     config = { extra = { chance = 3, xm = 1 } },
     rarity = "finity_showdown",
     cost = 10,
@@ -139,7 +139,7 @@ SMODS.Joker {
     atlas = "jokers",
     pos = { x = 2, y = 0 },
     soul_pos = { x = 3, y = 0 },
-
+    discovered = true, 
     config = { extra = { scaling = 0.1, xm = 1 } },
     rarity = "finity_showdown",
     cost = 10,
@@ -181,7 +181,7 @@ SMODS.Joker {
     atlas = "jokers",
     pos = { x = 4, y = 0 },
     soul_pos = { x = 5, y = 0 },
-
+    discovered = true, 
     config = { extra = { chance = 3, xm = 1 } },
     rarity = "finity_showdown",
     cost = 10,
@@ -280,7 +280,7 @@ SMODS.Joker {
     atlas = "jokers",
     pos = { x = 6, y = 0 },
     soul_pos = { x = 7, y = 0 },
-
+    discovered = true, 
     config = { extra = { drawback = 0.5, handper = 2, handcount = 0 } },
     rarity = "finity_showdown",
     cost = 10,
@@ -324,7 +324,7 @@ SMODS.Joker {
     atlas = "jokers",
     pos = { x = 8, y = 0 },
     soul_pos = { x = 9, y = 0 },
-
+    discovered = true, 
     config = { extra = {xc = 1, chipstoadd = 0,} },
     rarity = "finity_showdown",
     cost = 10,
@@ -387,7 +387,7 @@ SMODS.Joker {
     atlas = "jokers",
     pos = { x = 10, y = 0 },
     soul_pos = { x = 11, y = 0 },
-
+    discovered = true, 
     config = { extra = { chance = 4, permoney = 10 } },
     rarity = "finity_showdown",
     cost = 10,
@@ -419,6 +419,7 @@ SMODS.Joker {
     key = "emmy",
     name = "Blueberry Bird",
     atlas = "jokers",
+    discovered = true, 
     pos = { x = 12, y = 0 },
     soul_pos = { x = 13, y = 0 },
     config = { extra = { } },
@@ -460,6 +461,7 @@ SMODS.Joker {
     config = { extra = { chance = 3, xm = 1 } },
     rarity = "finity_showdown",
     cost = 10,
+    discovered = true, 
     blueprint_compat = true,
     eternal_compat = true,
     perishable_compat = true,

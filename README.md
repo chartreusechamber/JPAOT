@@ -6,6 +6,7 @@ Adds a good chunk animal-themed Showdown Bosses to duel and potentially assist i
 
 
 Requires Steamodded [smods-1.0.0-beta-1016c](https://github.com/Steamodded/smods) and [Lovely](https://github.com/ethangreen-dev/lovely-injector)
+[Finity](https://github.com/frangnosquest/Finity) is not required for the mod to work, but it's reccomended if you want to experence all the content this mod has to offer.
 
 ## Additions:
 - 8 new animal-themed Showdown Blinds (A size enough for it's own special spin on Finity's Challenger's Deck!)
@@ -13,7 +14,8 @@ Requires Steamodded [smods-1.0.0-beta-1016c](https://github.com/Steamodded/smods
 
 
 # Crossmods
-As of now, there is currently crossmod content with [Finity](https://github.com/frangnosquest/Finity)! Partner crossmod coming soon?
+As of now, there is currently crossmod content with [Finity](https://github.com/frangnosquest/Finity)! 
+Partner crossmod coming soon?
 
 ### Credits
 - [chartreusechamber](https://balatromods.miraheze.org/wiki/User:JPenguin) - The main penguin!
