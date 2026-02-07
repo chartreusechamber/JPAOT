@@ -1,3 +1,80 @@
+
+local function is_plain_card(card)
+    if not card or not card.config then return false end
+    local has_enhancement = (card.config.center ~= G.P_CENTERS.c_base)
+    local has_seal = (card.seal ~= nil)
+    local has_edition = (card.edition ~= nil)
+    return not (has_enhancement or has_seal or has_edition)
+end
+
+-- sort 
+local function sort_round(a, b)
+    local val_a = is_plain_card(a) and 1 or 2
+    local val_b = is_plain_card(b) and 1 or 2
+    
+    if val_a ~= val_b then
+        return val_a < val_b
+    end
+    return false
+end
+
+
+local function sort_pack(a, b)
+ 
+    local val_a = is_plain_card(a) and 2 or 1
+    local val_b = is_plain_card(b) and 2 or 1
+    
+    if val_a ~= val_b then
+        return val_a < val_b
+    end
+    return false
+end
+
+local ref_shuffle = CardArea.shuffle
+function CardArea:shuffle(seed, seed_mod)
+    ref_shuffle(self, seed, seed_mod)
+
+    if next(SMODS.find_card("j_jpaot_emmy")) and self == G.deck then
+        -- Round Mode: Plain at bottom, Modified at top
+        table.sort(self.cards, sort_round)
+        self:align_cards()
+    end
+end
+
+local ref_open = Card.open
+function Card:open() 
+    ref_open(self)
+
+    if next(SMODS.find_card("j_jpaot_emmy")) and self.ability.set == 'Booster' then
+        
+        local name = (self.ability.name or ""):lower()
+        local is_standard = name:find("standard") or name:find("buffoon")
+        
+        if not is_standard then
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 1.3,
+                func = function()
+                    -- Sort HAND (Pack Mode)
+                    if G.hand and #G.hand.cards > 0 then
+                        table.sort(G.hand.cards, sort_pack)
+                        G.hand:align_cards()
+                    end
+
+                    -- Sort DECK (Pack Mode)
+                    if G.deck and #G.deck.cards > 0 then
+                        table.sort(G.deck.cards, sort_pack)
+                        G.deck:align_cards()
+                    end
+                    
+                    return true
+                end
+            }))
+        end
+    end
+end
+
+
 -- I have no idea how other mods did this, so I am just copying from Neonflame. 
 local smaps = {}
 local quips = {}
@@ -341,27 +418,32 @@ SMODS.Joker {
 SMODS.Joker {
     key = "emmy",
     name = "Blueberry Bird",
-
     atlas = "jokers",
     pos = { x = 12, y = 0 },
     soul_pos = { x = 13, y = 0 },
-
-    config = { extra = { chance = 3, xm = 1 } },
+    config = { extra = { } },
     rarity = "finity_showdown",
     cost = 10,
-    blueprint_compat = true,
+    blueprint_compat = false, -- Sorting logic is hard to blueprint
     eternal_compat = true,
     perishable_compat = true,
-    demicolon_compat = true,
+    demicolon_compat = false,
 
     loc_vars = function(self, info_queue, card)
-		local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jpenguin")
-        return { vars = {num, den, card.ability.extra.xm} }
+        return { vars = { } }
     end,
 
     calculate = function(self, card, context)
-
+        if context.setting_blind and not card.debuff and not context.blueprint then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.deck:shuffle('emmy_sort')
+                    return true
+                end
+            }))
+        end
     end,
+
     set_badges = function (self, card, badges)
         SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
     end,
@@ -426,7 +508,7 @@ quips.bl_jpaot_sappy = {"sappy", 3, 6}
 decks.bl_jpaot_sappy = {"jpaot_backs", { x = 5, y = 0 }}
 
 smaps.bl_jpaot_samson = {"j_jpaot_samson", "Butterscotch Bugbear"}
-quips.bl_jpaot_samson = {"samson", 6, 6}
+quips.bl_jpaot_samson = {"samson", 6, 7}
 decks.bl_jpaot_samson = {"jpaot_backs", { x = 0, y = 1 }}
 
 smaps.bl_jpaot_emmy = {"j_jpaot_emmy", "Blueberry Bird"}

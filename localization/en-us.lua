@@ -147,10 +147,10 @@ return {
             j_jpaot_emmy = {
                 name = "Blueberry Bird",
                 text = {
-                    "Played and {C:attention}unscoring{} cards have a",
-                    "{C:green}#1# in #2#{} chance to be {C:red}destroyed",
-                    "Gain a tenth of its rank as {C:white,X:mult}XMult",
-                    "{s:0.8,C:inactive}(Currently {s:0.8,C:white,X:mult}X#3#{s:0.8,C:inactive} Mult)"
+                    "{C:attention}Unmodified{} cards are shuffled",
+                    "to the bottom of your deck",
+                    "and are drawn to the top when",
+                    "opening a {C:attention}Booster Pack{}"
                 }
             },
            
@@ -574,6 +574,11 @@ return {
                      lq_endless_samson_6  = {
                     "Quartz is super cute!",
                     "No bias here though."
+                },
+
+                lq_endless_samson_7  = {
+                    "Emmy's joker took so",
+                    "long to code...."
                 },
 
     
