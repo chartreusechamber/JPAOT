@@ -2,7 +2,7 @@
     "id": "JPAOT",
     "name": "Jade Penguin's Adapt or Toast",
     "author": ["Jade Penguin", "Camostar34"], 
-    "description": "Adds a good chunk of animal themed Showdown Bosses to duel and potentially as aid in your runs, most of the coding and art is done by Camostar34, so thank them! Now enjoy losing your runs in style!",
+    "description": "Adds eight animal-themed Showdown Bosses to duel and potentially assist in your runs, most of the coding and art is done by Camostar34, so thank them! Now enjoy losing your runs in style!",
     "prefix": "jpaot",
     "main_file": "JPAOT.lua",
     "priority": 0,
