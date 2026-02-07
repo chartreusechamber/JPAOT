@@ -268,26 +268,32 @@ SMODS.Blind {
             end
 
         
-            if context.individual and context.cardarea == G.play then
-            
-                if not context.other_card.debuff then
-                    
+        
+            if context.press_play then
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.2,
+            func = function()
+                -- 1. Manually calculate the scoring hand info
+                -- The 4th return value is the table of scoring cards
+                local text, disp_text, poker_hands, scoring_hand, non_scoring_hand = G.FUNCS.get_poker_hand_info(G.play.cards)
                 
-                   if #G.hand.cards > 0 then
-                        local discard_target = pseudorandom_element(G.hand.cards, 'samson_cut' .. context.other_card.unique_val)
-                        
-                        draw_card(G.hand, G.discard, 90, 'down', nil, discard_target)
-                        
-                        ease_dollars(-3)
-                        
-                        return {
-                            
-                            colour = G.C.MONEY,
-                            card = context.other_card
-                        }
-                    end
+                -- 2. Iterate ONLY through the scoring_hand list
+                for i = 1, #scoring_hand do
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            -- Use scoring_hand[i] instead of G.play.cards[i]
+                            scoring_hand[i]:juice_up()
+                            return true
+                        end,
+                    }))
+                    ease_dollars(-3)
+                    delay(0.23)
                 end
+                return true
             end
+        }))
+    end
         end
     end,
 

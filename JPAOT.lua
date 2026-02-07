@@ -5,6 +5,7 @@ local files = {
 	  "items/blinds",
     "items/globals",
     "items/jokers",
+    "items/backs"
 }
 
 local crossmodfiles = {

@@ -3,7 +3,15 @@ return {
     descriptions = {
         Back = {
           
-
+             b_jpaot_gauntlet = {
+                name = "Gauntlet Deck",
+                            text = {
+                    "Start with",
+                    "{C:attention}+1{} Joker slot and {C:money}$10{}",
+                    "Bosses are {C:attention}JPAOT Finishers{}",
+                    "Face {C:attention}Jade Penguin{} on Ante 8",
+                },
+            },
            
 
         },
@@ -68,8 +76,7 @@ return {
              bl_jpaot_samson = {
                 name = "Butterscotch Bugbear",
                 text = {
-                    "Discard a card in hand",
-                    "and lose $3 for every",
+                    "Lose $3 for every",
                     "card scored",
                     "Cards have a #1# in #2#",
                     "chance to not score if in debt",
