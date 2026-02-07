@@ -325,7 +325,7 @@ SMODS.Joker {
     pos = { x = 8, y = 0 },
     soul_pos = { x = 9, y = 0 },
     discovered = true, 
-    config = { extra = {xc = 1, chipstoadd = 0,} },
+    config = { extra = {xc = 1, chipstoadd = 0} }, 
     rarity = "finity_showdown",
     cost = 10,
     blueprint_compat = true,
@@ -334,47 +334,60 @@ SMODS.Joker {
     demicolon_compat = true,
 
     loc_vars = function(self, info_queue, card)
-
         return { vars = {card.ability.extra.xc} }
     end,
 
     calculate = function(self, card, context)
 
-        
         if context.initial_scoring_step then
+           
             if #context.full_hand == #context.scoring_hand then
                 
-                local random_card = pseudorandom_element(context.scoring_hand, pseudoseed('jpaot_polarbear'))
-                
-                local rank_to_add = math.max(0, random_card:get_id())
+            
+                local eligible_cards = {}
+                for _, scoring_card in ipairs(context.scoring_hand) do
+                    if scoring_card:get_id() > 0 then -- Stone Cards do not count and cannot have their ranks taken. 
+                        table.insert(eligible_cards, scoring_card)
+                    end
+                end
 
-                if rank_to_add > 0  then
-                
-                if random_card.debuff then
-                    SMODS.calculate_effect({ message = "Bummer...", colour = G.C.RED}, random_card)
-                else
-                SMODS.calculate_effect({ sound = "jpaot_qpb_strum", message = "Let's Rock!", colour = G.C.PURPLE}, random_card)
-                card.ability.extra.chipstoadd = rank_to_add/ 10
-                SMODS.scale_card(card, {
-                    ref_table = card.ability.extra,
-                    ref_value = "xc",
-                    scalar_value = "chipstoadd",
-                    message_key = "a_xchips",
-                    message_colour = G.C.CHIPS,
-                })
-                return nil, true
+              
+                if #eligible_cards > 0 then 
+                    
+                 
+                    local random_card = pseudorandom_element(eligible_cards, pseudoseed('jpaot_polarbear'))
+                    local rank_to_add = random_card:get_id() 
 
+                    if random_card.debuff then
+    
+                        SMODS.calculate_effect({ message = "Bummer...", colour = G.C.RED}, random_card)
+                    else
+                      
+                        SMODS.calculate_effect({ sound = "jpaot_qpb_strum", message = "Let's Rock!", colour = G.C.PURPLE}, random_card)
+                        
+                        
+                        card.ability.extra.chipstoadd = rank_to_add / 10
+                        
+                       
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "xc",
+                            scalar_value = "chipstoadd", 
+                            message_key = "a_xchips",
+                            message_colour = G.C.CHIPS,
+                        })
+                        return nil, true
+                    end
+                end
             end
-        
-             end
         end
-    end
 
         if context.joker_main then
             return {xchips = card.ability.extra.xc}
         end
 
     end,
+
     set_badges = function (self, card, badges)
         SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
     end,
@@ -425,7 +438,7 @@ SMODS.Joker {
     config = { extra = { } },
     rarity = "finity_showdown",
     cost = 10,
-    blueprint_compat = false, -- Sorting logic is hard to blueprint
+    blueprint_compat = false,
     eternal_compat = true,
     perishable_compat = true,
     demicolon_compat = false,
