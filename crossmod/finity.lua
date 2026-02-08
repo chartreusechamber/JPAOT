@@ -307,7 +307,7 @@ SMODS.Joker {
                 }
         end
 
-        if context.initial_scoring_step then
+        if context.initial_scoring_step and not context.blueprint then
             card.ability.extra.handcount = card.ability.extra.handcount + 1
         end
 
@@ -339,7 +339,7 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-        if context.initial_scoring_step then
+        if context.initial_scoring_step and not context.blueprint then
            
             if #context.full_hand == #context.scoring_hand then
                 
@@ -382,7 +382,7 @@ SMODS.Joker {
             end
         end
 
-        if context.joker_main then
+        if context.joker_main and context.forcetrigger then
             return {xchips = card.ability.extra.xc}
         end
 
@@ -474,10 +474,10 @@ SMODS.Joker {
     rarity = "finity_showdown",
     cost = 10,
     discovered = true, 
-    blueprint_compat = true,
+    blueprint_compat = false,
     eternal_compat = true,
     perishable_compat = true,
-    demicolon_compat = true,
+    demicolon_compat = false,
 
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_hedgehog")
