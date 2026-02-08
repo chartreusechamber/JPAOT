@@ -20,5 +20,5 @@ Aside from Finity, there is no crossmod content... yet! Stay tuned.
 ### Credits
 - [chartreusechamber](https://balatromods.miraheze.org/wiki/User:JPenguin) - The main penguin!
 - [Camostar34](https://balatromods.miraheze.org/wiki/User:Camostar34) - Main coder and Joker Artist 
-- [candycaneanniahlator(etherware2)](https://balatromods.miraheze.org/wiki/User:Candycanearter07) - Jade Penguin effect + general coding help 
+- [candycaneanniahlator(etherware2)](https://balatromods.miraheze.org/wiki/User:Candycanearter07) - Jade Penguin Joker and Blind effect + general coding help and ideas
 
