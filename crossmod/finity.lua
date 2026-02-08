@@ -416,8 +416,8 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-        if context.cardarea == G.play and context.repetition then
-            if SMODS.pseudorandom_probability(card, "jpaot_jpenguin", 1, card.ability.extra.chance) then
+        if context.cardarea == G.play and context.repetition and G.GAME.dollars >= 10 then
+            if SMODS.pseudorandom_probability(card, "jpaot_jsamson", 1, card.ability.extra.chance) then
                 return {   repetitions = math.floor( G.GAME.dollars / card.ability.extra.permoney) }
             end
         end
