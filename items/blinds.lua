@@ -28,7 +28,7 @@ SMODS.Blind {
     dollars = 8,
     mult = 2,
     boss = { showdown = true },
-    boss_colour = HEX("B88828"),
+    boss_colour = HEX("A61A1F"),
 
     atlas = "blinds",
     pos = { x = 0, y = 1 },
@@ -86,7 +86,7 @@ SMODS.Blind {
     dollars = 8,
     mult = 2,
     boss = { showdown = true },
-    boss_colour = HEX("A61A1F"),
+    boss_colour = HEX("B88828"),
     atlas = "blinds",
     pos = { x = 0, y = 2 },
 
