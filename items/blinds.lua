@@ -223,22 +223,169 @@ SMODS.Blind{
 -- sappy
 SMODS.Blind {
     key = "sappy",
+    name = "Honey Hedgehog",
     dollars = 8,
     mult = 2,
     boss = { showdown = true },
     boss_colour = HEX("d8de3e"),
-
     atlas = "blinds",
     pos = { x = 0, y = 5 },
 
-    calculate = function(self, blind, context)
-       
+    
+    recalc_debuff = function(self, card, from_blind)
+     
+        if card.ability.jpaot_sticky then
+            return true
+        end
+        return false
     end,
 
+    
     disable = function(self)
-      
+        for _, v in ipairs(G.playing_cards) do
+            v.ability.jpaot_sticky = nil
+        end
     end
 }
+
+
+local ref_discard_cards_from_highlighted = G.FUNCS.discard_cards_from_highlighted
+
+G.FUNCS.discard_cards_from_highlighted = function(e, hook)
+    local hedgehog_joker = SMODS.find_card("j_jpaot_sappy")[1]
+    
+    if hedgehog_joker then
+        local any_reshuffled = false
+        
+    
+        for i, card in ipairs(G.hand.highlighted) do
+             
+             if SMODS.pseudorandom_probability(hedgehog_joker, 'hedgehog_discard', 1, 3) then
+               
+                card.ability.jpaot_reshuffle = true 
+                any_reshuffled = true
+             end
+        end
+        
+       
+        if any_reshuffled then
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after', 
+                delay = 0.5, 
+                func = function() 
+                    G.deck:shuffle('hedgehog_discard')
+                    return true 
+                end
+            }))
+        end
+    end
+    
+
+    ref_discard_cards_from_highlighted(e, hook)
+end
+
+
+
+local ref_draw_card = draw_card
+
+function draw_card(from, to, percent, dir, sort, card, delay, mute, stay_flipped, vol, message)
+    
+    
+    if card and card.ability and card.ability.jpaot_reshuffle then
+        to = G.deck
+        
+       
+        card.ability.jpaot_reshuffle = nil
+        
+        card:juice_up()
+        card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Reshuffled!", colour = G.C.YELLOW})
+    end
+    
+    ref_draw_card(from, to, percent, dir, sort, card, delay, mute, stay_flipped, vol, message)
+end
+
+
+--GOD. 
+
+local ref_draw_from_play_to_discard = G.FUNCS.draw_from_play_to_discard
+
+G.FUNCS.draw_from_play_to_discard = function(e)
+    local hedgehog_joker = SMODS.find_card("j_jpaot_sappy")[1]
+    local sappy_blind = (G.GAME.blind and G.GAME.blind.config.blind.key == 'bl_jpaot_sappy' and not G.GAME.blind.disabled)
+    
+    if not hedgehog_joker and not sappy_blind then
+        return ref_draw_from_play_to_discard(e)
+    end
+
+    local cards_to_deck = {}
+    local cards_to_hand = {}
+    local cards_to_discard = {}
+
+    -- Sort cards
+    for i = 1, #G.play.cards do
+        local card = G.play.cards[i]
+        if (not card.shattered) and (not card.destroyed) then
+            local handled = false
+            
+         
+            if hedgehog_joker and not handled then
+                if SMODS.pseudorandom_probability(hedgehog_joker, 'hedgehog_play', 1, 3) then
+                     table.insert(cards_to_deck, card)
+                     handled = true
+                end
+            end
+
+        
+            if sappy_blind and not handled then
+                table.insert(cards_to_hand, card)
+                handled = true
+            end
+
+            
+            if not handled then
+                table.insert(cards_to_discard, card)
+            end
+        end
+    end
+
+   
+    if #cards_to_deck > 0 then
+        for i, card in ipairs(cards_to_deck) do
+            card:juice_up()
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Reshuffled!", colour = G.C.YELLOW})
+           
+            ref_draw_card(G.play, G.deck, 90, 'up', nil, card)
+        end
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after', delay = 0.2,
+            func = function() G.deck:shuffle('hedgehog_play'); return true end
+        }))
+    end
+
+    if #cards_to_hand > 0 then
+         for i, card in ipairs(cards_to_hand) do
+            card.ability.jpaot_sticky = true
+            ref_draw_card(G.play, G.hand, i*100/#cards_to_hand, 'up', true, card)
+            
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after', delay = 0.1,
+                func = function()
+                    if card.area == G.hand then
+                        G.GAME.blind:debuff_card(card)
+                        card:juice_up()
+                    end
+                    return true
+                end
+            }))
+        end
+    end
+
+    if #cards_to_discard > 0 then
+        for i, card in ipairs(cards_to_discard) do
+            ref_draw_card(G.play, G.discard, 90, 'up', nil, card)
+        end
+    end
+end
 
 --
 SMODS.Blind {
@@ -274,15 +421,14 @@ SMODS.Blind {
             trigger = 'after',
             delay = 0.2,
             func = function()
-                -- 1. Manually calculate the scoring hand info
-                -- The 4th return value is the table of scoring cards
+
                 local text, disp_text, poker_hands, scoring_hand, non_scoring_hand = G.FUNCS.get_poker_hand_info(G.play.cards)
                 
-                -- 2. Iterate ONLY through the scoring_hand list
+       
                 for i = 1, #scoring_hand do
                     G.E_MANAGER:add_event(Event({
                         func = function()
-                            -- Use scoring_hand[i] instead of G.play.cards[i]
+                            
                             scoring_hand[i]:juice_up()
                             return true
                         end,
@@ -312,20 +458,20 @@ SMODS.Blind{
     atlas = "blinds",
     pos = { x = 0, y = 7 },
 
-    -- Save the starting chip requirement when the blind is set
+
     set_blind = function(self, reset, silent)
         if not reset then
             G.GAME.emmy_startchips = G.GAME.blind.chips
         end
     end,
 
-    -- Optional: clean up when disabled
+
     disable = function()
         G.GAME.emmy_startchips = nil
     end,
 
     calculate = function(self, blind, context)
-        -- Run once per scoring card
+       
         if context.individual 
            and context.cardarea == G.play
            and context.other_card

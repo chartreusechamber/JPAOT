@@ -5,17 +5,17 @@ Otherwise known as: Oh Boy! That Card Eating Green Scarf Wearing Penguin Jade Pe
 Adds a good chunk animal-themed Showdown Bosses to duel and potentially assist in your runs, most of the coding and art is done by Camostar34, so thank them! Now enjoy losing your runs in style!
 
 
-Requires Steamodded [smods-1.0.0-beta-1016c](https://github.com/Steamodded/smods) and [Lovely](https://github.com/ethangreen-dev/lovely-injector)
-[Finity](https://github.com/frangnosquest/Finity) is not required for the mod to work, but it's reccomended if you want to experence all the content this mod has to offer.
+Requires Steamodded [smods-1.0.0-beta-1016c](https://github.com/Steamodded/smods), [Lovely](https://github.com/ethangreen-dev/lovely-injector) and 
+[Finity](https://github.com/frangnosquest/Finity), since most of the content involves the Showdown Jokers. 
 
 ## Additions:
 - 8 new animal-themed Showdown Blinds (A size enough for it's own special spin on Finity's Challenger's Deck!)
+- 8 additional Showdown Jokers to help with high scoring endless runs.
 
 
 
 # Crossmods
-As of now, there is currently crossmod content with [Finity](https://github.com/frangnosquest/Finity)! 
-Partner crossmod coming soon?
+Aside from Finity, there is no crossmod content... yet! Stay tuned. 
 
 ### Credits
 - [chartreusechamber](https://balatromods.miraheze.org/wiki/User:JPenguin) - The main penguin!

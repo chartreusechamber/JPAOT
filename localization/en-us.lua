@@ -60,8 +60,8 @@ return {
               bl_jpaot_sappy = {
                 name = "Honey Hedgehog",
                 text = {
-                    "Copies the effects of",
-                    "#1# and #2#"
+                    "Played cards return",
+                    "to hand debuffed"
                 }
             },
 
@@ -157,10 +157,12 @@ return {
              j_jpaot_sappy = {
                 name = "Honey Hedgehog",
                 text = {
-                    "Played and {C:attention}unscoring{} cards have a",
-                    "{C:green}#1# in #2#{} chance to be {C:red}destroyed",
-                    "Gain a tenth of its rank as {C:white,X:mult}XMult",
-                    "{s:0.8,C:inactive}(Currently {s:0.8,C:white,X:mult}X#3#{s:0.8,C:inactive} Mult)"
+                    "{C:attention}+#3#{} Hand Size for",
+                    "every card discarded",
+                    "{C:inactive}(Resets every round)",
+                    "Scored and Discarded cards have",
+                    "a {C:green}#1# in #2#{} chance to be {C:attention}reshuffled{}",
+                    "back to your deck"
                 }
             },
 
@@ -579,6 +581,12 @@ return {
                 lq_endless_samson_7  = {
                     "Emmy's joker took so",
                     "long to code...."
+                },
+
+            lq_endless_samson_8  = {
+                    "I love Sappy, but man",
+                    "his joker effect took",
+                    "so much out of me...."
                 },
 
     

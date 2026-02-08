@@ -466,12 +466,11 @@ SMODS.Joker {
 SMODS.Joker {
     key = "sappy",
     name = "Honey Hedgehog",
-
     atlas = "jokers",
     pos = { x = 14, y = 0 },
     soul_pos = { x = 15, y = 0 },
 
-    config = { extra = { chance = 3, xm = 1 } },
+    config = { extra = { chance = 3, handsizeplus = 1, current_h_bonus = 0 } },
     rarity = "finity_showdown",
     cost = 10,
     discovered = true, 
@@ -481,19 +480,40 @@ SMODS.Joker {
     demicolon_compat = true,
 
     loc_vars = function(self, info_queue, card)
-		local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jpenguin")
-        return { vars = {num, den, card.ability.extra.xm} }
+        local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_hedgehog")
+        return { vars = {num, den, card.ability.extra.handsizeplus} }
     end,
 
     calculate = function(self, card, context)
+      
+        if context.discard and not context.blueprint and context.other_card then
+            card.ability.extra.current_h_bonus = card.ability.extra.current_h_bonus + card.ability.extra.handsizeplus
+            
+            G.hand:change_size(card.ability.extra.handsizeplus)
+            
+        end
 
+        if context.pre_discard and #context.full_hand > 0 then
+            return {message = "Up!"}
+        end
+
+        
+        if context.end_of_round and not context.blueprint and not context.repetition and not context.individual_repetition then
+            if card.ability.extra.current_h_bonus > 0 then
+                G.hand:change_size(-card.ability.extra.current_h_bonus)
+                card.ability.extra.current_h_bonus = 0
+                return { message = "Reset" }
+            end
+        end
     end,
-    set_badges = function (self, card, badges)
-        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
-    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+        if card.ability.extra.current_h_bonus > 0 then
+             G.hand:change_size(-card.ability.extra.current_h_bonus)
+             card.ability.extra.current_h_bonus = 0
+        end
+    end
 }
-
-
 
 smaps.bl_jpaot_jpenguin = {"j_jpaot_jpenguin", "Jade Penguin"} -- This is the key and name of the joker that is assosiated with the blind.
 quips.bl_jpaot_jpenguin = {"jpenguin", 4, 3} -- This is the key for quips. first and second number are the amount of game over and endless quips respectively.
@@ -523,7 +543,7 @@ quips.bl_jpaot_sappy = {"sappy", 3, 6}
 decks.bl_jpaot_sappy = {"jpaot_backs", { x = 5, y = 0 }}
 
 smaps.bl_jpaot_samson = {"j_jpaot_samson", "Butterscotch Bugbear"}
-quips.bl_jpaot_samson = {"samson", 6, 7}
+quips.bl_jpaot_samson = {"samson", 6, 8}
 decks.bl_jpaot_samson = {"jpaot_backs", { x = 0, y = 1 }}
 
 smaps.bl_jpaot_emmy = {"j_jpaot_emmy", "Blueberry Bird"}
