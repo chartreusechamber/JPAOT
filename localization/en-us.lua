@@ -441,7 +441,7 @@ return {
                 },
 
                 lq_frog_3 = {
-                    "If only you weren't,",
+                    "If only you weren't",
                     "an easy and open target."
                 },
 

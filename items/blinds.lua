@@ -168,19 +168,23 @@ SMODS.Blind {
     atlas = "blinds",
     pos = { x = 0, y = 3 },
 
+    
     calculate = function(self, blind, context)
+    
+        if context.final_scoring_step and not blind.disabled then
+            
        
-    end,
-
-    debuff_hand = function(self, cards, hand, handname, check)
-        if G.GAME.current_round.hands_left == 0 then 
-            return true 
+            if G.GAME.current_round.hands_left > 0 then
+                return {
+                    xmult = 0,  
+                    xchips = 0,      
+                }
+            end
+            
         end
     end,
 
-
 }
-
 -- bear
 SMODS.Blind{
     key = "polarbear",
