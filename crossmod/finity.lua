@@ -192,7 +192,7 @@ SMODS.Joker {
 
     loc_vars = function(self, info_queue, card)
         -- 1. Find the ID with the highest play count
-        local target_id = 14 -- Default to Ace
+        local target_id = 11 -- Default to Ace
         local highest_count = -1
 
        
@@ -231,7 +231,7 @@ SMODS.Joker {
         if context.repetition and context.cardarea == G.play then
             
           
-            local target_id = 14
+            local target_id = 11
             local highest_count = -1
             if G.GAME.most_played_ranks then
                 for id, count in pairs(G.GAME.most_played_ranks) do

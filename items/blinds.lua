@@ -92,7 +92,7 @@ SMODS.Blind {
 
    loc_vars = function(self)
         --Find the ID with the highest play count
-        local target_id = 14 -- Default to Ace
+        local target_id = 11 -- Default to Ace
         local highest_count = -1
 
        
@@ -131,7 +131,7 @@ SMODS.Blind {
 
     debuff_hand = function(self, cards, hand, handname, check)
       
-        local target_id = self.beaver_target_id or 14
+        local target_id = self.beaver_target_id or 11
         
         if cards then
             local found_target = false
