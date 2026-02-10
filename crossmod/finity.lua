@@ -401,7 +401,7 @@ SMODS.Joker {
     pos = { x = 10, y = 0 },
     soul_pos = { x = 11, y = 0 },
     discovered = true, 
-    config = { extra = { chance = 4, permoney = 10 } },
+    config = { extra = { chance = 2, permoney = 20 } },
     rarity = "finity_showdown",
     cost = 10,
     blueprint_compat = true,
@@ -416,7 +416,7 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-        if context.cardarea == G.play and context.repetition and G.GAME.dollars >= 10 then
+        if context.cardarea == G.play and context.repetition and G.GAME.dollars >= card.ability.extra.permoney then
             if SMODS.pseudorandom_probability(card, "jpaot_jsamson", 1, card.ability.extra.chance) then
                 return {   repetitions = math.floor( G.GAME.dollars / card.ability.extra.permoney) }
             end
