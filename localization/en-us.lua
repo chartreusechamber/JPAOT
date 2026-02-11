@@ -173,7 +173,7 @@ return {
 
         Partner = {
             pnr_jpaot_snugglepenguin = {
-                name = "Snugglebug",
+                name = "The Snugglebug",
                 text = {
                     "When card is {C:attention}destroyed",
                     "{C:green}#1# in #2#{} chance to",
@@ -183,7 +183,7 @@ return {
             },
 
             pnr_jpaot_snugglepenguin_1 = {
-                name = "Snugglebug",
+                name = "The Snugglebug",
                 text = {
                     "When card is {C:attention}destroyed",
                     "gain half its {C:blue}chips",
