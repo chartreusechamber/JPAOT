@@ -15,7 +15,7 @@ function get_new_boss()
     if G.GAME.selected_back and G.GAME.selected_back.effect.center.key == 'b_jpaot_gauntlet' then
         
        
-        if G.GAME.round_resets.ante % 8 == 0 then
+        if G.GAME.round_resets.ante % GAME.win_ante == 0 then
             return "bl_jpaot_jpenguin"
         end
 
