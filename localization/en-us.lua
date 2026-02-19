@@ -141,6 +141,7 @@ return {
                     "Scored cards have a {C:green}#1# in #2#{}",
                     "chance to {C:attention}retrigger{} for for every",
                     "{C:money}$#3#{} you have",
+                    "{s:0.8,C:inactive}(Max of 100 retriggers)"
                 }
             },
            

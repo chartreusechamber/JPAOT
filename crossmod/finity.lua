@@ -192,7 +192,7 @@ SMODS.Joker {
 
     loc_vars = function(self, info_queue, card)
         -- 1. Find the ID with the highest play count
-        local target_id = 11 -- Default to Ace
+        local target_id = 14 -- Default to Ace
         local highest_count = -1
 
        
@@ -231,7 +231,7 @@ SMODS.Joker {
         if context.repetition and context.cardarea == G.play then
             
           
-            local target_id = 11
+            local target_id = 14
             local highest_count = -1
             if G.GAME.most_played_ranks then
                 for id, count in pairs(G.GAME.most_played_ranks) do
@@ -414,11 +414,37 @@ SMODS.Joker {
         return { vars = {num, den, card.ability.extra.permoney} }
     end,
 
-    calculate = function(self, card, context)
+  calculate = function(self, card, context)
 
         if context.cardarea == G.play and context.repetition and G.GAME.dollars >= card.ability.extra.permoney then
             if SMODS.pseudorandom_probability(card, "jpaot_jsamson", 1, card.ability.extra.chance) then
-                return {   repetitions = math.floor( G.GAME.dollars / card.ability.extra.permoney) }
+                
+                local final_reps = 0
+                local cost_for_max = card.ability.extra.permoney * 100 
+                
+                
+                if G.GAME.dollars >= cost_for_max then
+                    final_reps = 100
+                else
+                    
+                    local raw_division = G.GAME.dollars / card.ability.extra.permoney
+                    
+                    
+                    if type(raw_division) == 'table' and raw_division.to_number then
+                        final_reps = math.floor(raw_division:to_number())
+                    elseif type(raw_division) == 'number' then
+                        final_reps = math.floor(raw_division)
+                    end
+                end
+
+          
+                if final_reps > 0 then
+                    return {
+                        repetitions = final_reps,
+                        card = card 
+                    }
+                end
+
             end
         end
 
