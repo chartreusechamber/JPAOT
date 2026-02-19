@@ -25,21 +25,12 @@ end
 
 
 
-<<<<<<< HEAD
 -- jade mode
 local jpaot_config = SMODS.current_mod.config
 local jpaot_path = SMODS.current_mod.path
 
 -- Image Assets
 local jpaot_assets = { img = nil }
-=======
--- Jade Mode. 
-local jpaot_config = SMODS.current_mod.config
-local jpaot_path = SMODS.current_mod.path
-
-local jpaot_assets = { img = nil }
-
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
 local function get_jpaot_image()
     if not jpaot_assets.img then
         local file_data = NFS.newFileData(jpaot_path .. "assets/jadebeak.png")
@@ -50,7 +41,6 @@ local function get_jpaot_image()
     return jpaot_assets.img
 end
 
-<<<<<<< HEAD
 -- Sound Assets
 local jade_sounds = { enable = nil, disable = nil }
 
@@ -77,8 +67,6 @@ local function play_jade_sound(type)
     end
 end
 
-=======
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
 
 local function easeOutBounce(t, b, c, d)
     t = t / d
@@ -108,26 +96,17 @@ local function easeInElastic(t, b, c, d)
 end
 
 
-<<<<<<< HEAD
 local jade_mode = {
     timer = 1,
     duration = 1.3,
 
     
     active = jpaot_config.jpaot_beak or false, 
-=======
--- We store the state here so it persists even when menus close
-local jade_mode = {
-    timer = 1,
-    duration = 1.3,
-    active = false, -- Internal state tracker
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
     current_scale_y = 0,
     last_time = love.timer.getTime()
 }
 
 
-<<<<<<< HEAD
 local ref_love_draw = love.draw
 
 function love.draw()
@@ -137,27 +116,12 @@ function love.draw()
     local target = jpaot_config.jpaot_beak or false
     
    
-=======
--- This wraps the game's main draw function to draw our bird on top
-local ref_love_draw = love.draw
-
-function love.draw()
-    -- 1. Draw the actual game first
-    ref_love_draw()
-
-    -- 2. Handle Jade Mode Logic
-    -- Check the config value directly
-    local target = jpaot_config.jpaot_shitpostjokers or false
-    
-    
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
     local current_time = love.timer.getTime()
     local dt = current_time - (jade_mode.last_time or current_time)
     jade_mode.last_time = current_time
 
     
     if target ~= jade_mode.active then
-<<<<<<< HEAD
         
         -- Apply the new state
         jade_mode.active = target
@@ -176,13 +140,6 @@ function love.draw()
     end
 
 
-=======
-        jade_mode.active = target
-        jade_mode.timer = 0 -- Reset animation
-    end
-
-  
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
     if jade_mode.timer < jade_mode.duration then
         jade_mode.timer = math.min(jade_mode.timer + dt, jade_mode.duration)
     end
@@ -191,7 +148,6 @@ function love.draw()
         jade_mode.current_scale_y = jade_mode.active and 1 or 0
     else
         if jade_mode.active then
-<<<<<<< HEAD
             -- Opening Animation
             jade_mode.current_scale_y = easeInElastic(jade_mode.timer, 0, 1, jade_mode.duration)
         else
@@ -203,18 +159,6 @@ function love.draw()
     -- 5. RENDER
     local img = get_jpaot_image()
     
-=======
-            jade_mode.current_scale_y = easeInElastic(jade_mode.timer, 0, 1, jade_mode.duration)
-        else
-            jade_mode.current_scale_y = easeInElastic(jade_mode.timer, 1, -1, jade_mode.duration)
-        end
-    end
-
-    
-    local img = get_jpaot_image()
-    
-    
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
     if img and jade_mode.current_scale_y > 0.01 then
         love.graphics.setColor(1, 1, 1, 1)
         
@@ -222,20 +166,12 @@ function love.draw()
         local screen_h = love.graphics.getHeight()
         local img_w, img_h = img:getDimensions()
         
-<<<<<<< HEAD
-=======
-        
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
         local target_height = screen_h * 0.5 
         local base_scale = target_height / img_h
         
         local final_scale_x = base_scale * 0.75
         local final_scale_y = base_scale * 0.75 * jade_mode.current_scale_y
         
-<<<<<<< HEAD
-=======
-        
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
         local draw_x = (screen_w / 2 ) 
         local draw_y = screen_h 
         
@@ -250,10 +186,6 @@ function love.draw()
     end
 end
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
 SMODS.current_mod.config_tab = function()
     return {
         n = G.UIT.ROOT,
@@ -269,11 +201,7 @@ SMODS.current_mod.config_tab = function()
                                 label = "JADE MODE",
                                 active_colour = G.C.GREEN,
                                 ref_table = jpaot_config,
-<<<<<<< HEAD
                                 ref_value = "jpaot_beak"
-=======
-                                ref_value = "jpaot_shitpostjokers"
->>>>>>> 7ecc36180d03087eed473604a9e371c957d6f781
                             }
                         }
                     }
