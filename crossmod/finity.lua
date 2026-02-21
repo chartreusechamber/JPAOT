@@ -382,7 +382,7 @@ SMODS.Joker {
             end
         end
 
-        if context.joker_main and context.forcetrigger then
+        if context.joker_main or context.forcetrigger then
             return {xchips = card.ability.extra.xc}
         end
 
