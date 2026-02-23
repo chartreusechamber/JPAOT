@@ -607,6 +607,10 @@ smaps.bl_jpaot_emmy = {"j_jpaot_emmy", "Blueberry Bird"}
 quips.bl_jpaot_emmy = {"emmy", 4, 6}
 decks.bl_jpaot_emmy = {"jpaot_backs", { x = 1, y = 1 }}
 
+smaps.bl_jpaot_prinny = {"j_jpaot_prinny", "Copper Prinny"}
+quips.bl_jpaot_prinny = {"prinny", 4, 6}
+decks.bl_jpaot_prinny = {"jpaot_backs", { x = 1, y = 1 }}
+
 
 
 
