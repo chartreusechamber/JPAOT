@@ -713,6 +713,78 @@ return {
                     "if u want"
                 },
 
+                -- COPPER PRINNY (Comming soon!)
+
+                --Showdown
+
+                lq_prinny_1 = {
+                    "Looks like someone got way too attached",
+                    "to their ammunition dood!",
+                },
+
+                lq_prinny_2 = {
+                    "Hey slowpoke, can you actually pick up the pace",
+                    "or do you want to intentionally be blown up dood?",
+                },
+
+                lq_prinny_3 = {
+                    "Lovely day to use Dusk?",
+                    "WRONG! EAT MY DAGGERS DOOD!",
+                },
+
+                lq_prinny_4 = {
+                    "Got too comfortable with your gear did you dood?",
+                    "That's what I thought dood.",
+                },
+
+                -- Endless
+
+                lq_endless_prinny_1 = {
+                    "OK OK, ENOUGH WITH THE GRINDING DOOD!",
+                },
+
+                lq_endless_prinny_2 = {
+                    "Oh great, you drop a weak sauce",
+                    "amount of XP dood.",
+                },
+
+                lq_endless_prinny_3 = {
+                    "Bout time you actually stop,",
+                    "perish,",
+                    "and reincarnate in a different timeline dood.",
+                },
+
+                lq_endless_prinny_4 = {
+                    "I'm still packed with energy,",
+                    "so I'll speak out this paragraph about my kind from that site Wikipedia",
+                    "to flood the screen dood!",
+                    "A prinny is a small, usually blue, pouch-wearing penguin-like creature",
+                    "with disproportionately small bat wings, two peg legs where feet would normally be,",
+                    "and stitches at the top of the chest. When thrown, they explode on impact dood.",
+                    "A common trait of prinnies is their upbeat attitude and tendency to end their sentences",
+                    "with '-ssu' dood. In the English translation, they frequently use 'dood' as an interjection dood.",
+                    "We stand roughly 1 m (3 ft 3 in) tall, though the weight can vary dood. We attack with knives,",
+                    "bombs, and occasionally other weapons stored in their bags dood. While rarely mentioned in the game,",
+                    "we have been known to dispense a beverage known as prinny juice, which according to a",
+                    "Nippon Ichi Software America interview is produced from 'the most flavorful' and delicious parts of",
+                    "our fresh, vine-grown Prinnies' dood.",
+                    "In Disgaea: Hour of Darkness, humans who have led a worthless life, such as thieves or murderers,",
+                    "or have committed a mortal sin such as suicide, have their souls sewn into the body of a prinny",
+                    "upon their death dood. Due to the unstable soul of a human, regular prinnies like me will explode",
+                    "when they hit something with great force, such as when thrown dood. However, Prinny suits filled with demon souls,",
+                    "as seen in Makai Kingdom or in the case of recurring boss Baal, will not dood. After being reborn,",
+                    "the newly created prinny will serve as a soldier, slave, or servant in the Netherworld or Celestia dood.",
+                    "The prinny remains until it has earned reincarnation by redemption through good deeds or earning enough money, and leaves its servitude",
+                    "in a ritual involving the Red Moon dood. In Celestia, we mostly act as maids and domestic servants dood. The good deeds they perform there",
+                    "lead to their reincarnation. In the Netherworld, depending on the lord they serve, they spend their difficult after-lives doing",
+                    "excessively hard labor for very little pay, and are often thrown around just for the amusement of their lords dood.",
+                    "The pittance of money they earn in the Netherworld goes towards their reincarnation dood.",
+                    "And if you are somehow seeing the rest of this which you are not supposed to,",
+                    "I request that you immediately ask yourself on why you are looking through the files",
+                    "of my puny penguin's mod dood.",
+                    
+                },
+
                 
          },
 
