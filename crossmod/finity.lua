@@ -541,6 +541,37 @@ SMODS.Joker {
     end
 }
 
+SMODS.Joker {
+    key = "prinny",
+    name = "Copper Prinny",
+    atlas = "jokers",
+    pos = { x = 16, y = 0 },
+    soul_pos = { x = 17, y = 0 },
+
+    config = { extra = {  } },
+    rarity = "finity_showdown",
+    cost = 10,
+    discovered = true, 
+    blueprint_compat = false,
+    eternal_compat = true,
+    perishable_compat = true,
+    demicolon_compat = false,
+
+    loc_vars = function(self, info_queue, card)
+
+        return { vars = {num, den, card.ability.extra.handsizeplus} }
+    end,
+
+    calculate = function(self, card, context)
+      
+      
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+        
+    end
+}
+
 smaps.bl_jpaot_jpenguin = {"j_jpaot_jpenguin", "Jade Penguin"} -- This is the key and name of the joker that is assosiated with the blind.
 quips.bl_jpaot_jpenguin = {"jpenguin", 4, 3} -- This is the key for quips. first and second number are the amount of game over and endless quips respectively.
 decks.bl_jpaot_jpenguin = {"jpaot_backs", { x = 0, y = 0 }}
@@ -575,6 +606,7 @@ decks.bl_jpaot_samson = {"jpaot_backs", { x = 0, y = 1 }}
 smaps.bl_jpaot_emmy = {"j_jpaot_emmy", "Blueberry Bird"}
 quips.bl_jpaot_emmy = {"emmy", 4, 6}
 decks.bl_jpaot_emmy = {"jpaot_backs", { x = 1, y = 1 }}
+
 
 
 
