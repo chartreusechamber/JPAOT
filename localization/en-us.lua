@@ -172,6 +172,17 @@ return {
            
         },
 
+        j_jpaot_prinny = {
+            name = "Copper Prinny (Coming Soon!)",
+            text = {
+                "This joker has no code and will",
+                "do absolutely nothing until his",
+                "Showdown Blind is programmed, therefore",
+                "he won't naturally appear, unless forced.",
+            }
+        },
+
+
         Partner = {
             pnr_jpaot_snugglepenguin = {
                 name = "The Snugglebug",

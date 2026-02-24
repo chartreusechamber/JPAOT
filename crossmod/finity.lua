@@ -541,7 +541,7 @@ SMODS.Joker {
     end
 }
 
-SMODS.Joker {
+ SMODS.Joker {
     key = "prinny",
     name = "Copper Prinny",
     atlas = "jokers",
@@ -569,7 +569,11 @@ SMODS.Joker {
 
     remove_from_deck = function(self, card, from_debuff)
         
-    end
+    end,
+
+    in_pool = function (self, args)
+        return false
+    end,
 }
 
 smaps.bl_jpaot_jpenguin = {"j_jpaot_jpenguin", "Jade Penguin"} -- This is the key and name of the joker that is assosiated with the blind.
@@ -608,7 +612,7 @@ quips.bl_jpaot_emmy = {"emmy", 4, 6}
 decks.bl_jpaot_emmy = {"jpaot_backs", { x = 1, y = 1 }}
 
 smaps.bl_jpaot_prinny = {"j_jpaot_prinny", "Copper Prinny"}
-quips.bl_jpaot_prinny = {"prinny", 4, 6}
+quips.bl_jpaot_prinny = {"prinny", 4, 4}
 decks.bl_jpaot_prinny = {"jpaot_backs", { x = 1, y = 1 }}
 
 
