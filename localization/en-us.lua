@@ -167,12 +167,7 @@ return {
                 }
             },
 
-           
-
-           
-        },
-
-        j_jpaot_prinny = {
+            j_jpaot_prinny = {
             name = "Copper Prinny (Coming Soon!)",
             text = {
                 "This joker has no code and will",
@@ -181,6 +176,11 @@ return {
                 "he won't naturally appear, unless forced.",
             }
         },
+
+           
+        },
+
+       
 
 
         Partner = {
