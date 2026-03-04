@@ -1,4 +1,4 @@
-
+to_big = to_big or function(x) return x end
 local function is_plain_card(card)
     if not card or not card.config then return false end
     local has_enhancement = (card.config.center ~= G.P_CENTERS.c_base)
@@ -396,12 +396,11 @@ SMODS.Joker {
 SMODS.Joker {
     key = "samson",
     name = "Butterscotch Bugbear",
-
     atlas = "jokers",
     pos = { x = 10, y = 0 },
     soul_pos = { x = 11, y = 0 },
     discovered = true, 
-    config = { extra = { chance = 2, permoney = 20 } },
+    config = { extra = { chance = 2, permoney = 20, evilreps = 0 } },
     rarity = "finity_showdown",
     cost = 10,
     blueprint_compat = true,
@@ -410,47 +409,61 @@ SMODS.Joker {
     demicolon_compat = false,
 
     loc_vars = function(self, info_queue, card)
-		local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jsamson")
+        local num, den = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, "jpaot_jsamson")
+
         return { vars = {num, den, card.ability.extra.permoney} }
     end,
 
-  calculate = function(self, card, context)
+-- if samson breaks again i will  kill myself
 
-        if context.cardarea == G.play and context.repetition and G.GAME.dollars >= card.ability.extra.permoney then
-            if SMODS.pseudorandom_probability(card, "jpaot_jsamson", 1, card.ability.extra.chance) then
-                
-                local final_reps = 0
-                local cost_for_max = card.ability.extra.permoney * 100 
-                
-                
-                if G.GAME.dollars >= cost_for_max then
-                    final_reps = 100
+calculate = function(self, card, context)
+        if context.cardarea == G.play and context.repetition then
+
+            local success, result = pcall(function()
+                if type(G.GAME.dollars) == 'cdata' or type(G.GAME.dollars) == 'table' then
+                  
+                    return math.floor((G.GAME.dollars / card.ability.extra.permoney):to_number())
                 else
-                    
-                    local raw_division = G.GAME.dollars / card.ability.extra.permoney
-                    
-                    
-                    if type(raw_division) == 'table' and raw_division.to_number then
-                        final_reps = math.floor(raw_division:to_number())
-                    elseif type(raw_division) == 'number' then
-                        final_reps = math.floor(raw_division)
-                    end
+               
+                    return math.floor((tonumber(G.GAME.dollars) or 0) / card.ability.extra.permoney)
                 end
-
-          
-                if final_reps > 0 then
-                    return {
-                        repetitions = final_reps,
-                        card = card 
-                    }
-                end
-
+            end)
+            
+           
+            if not success then
+                card.ability.extra.evilreps = 0
+            else
+                card.ability.extra.evilreps = result
             end
+            
+            if card.ability.extra.evilreps > 100 then 
+                card.ability.extra.evilreps = 100 
+            end
+            
+            if card.ability.extra.evilreps > 0 then
+  
+                
+              
+                if SMODS.pseudorandom_probability(card, "jpaot_jsamson", 1, card.ability.extra.chance) then
+                  
+                    return {
+                       
+                        repetitions = card.ability.extra.evilreps,
+                       
+                    }
+                  
+                end
+                
+            end
+            
         end
-
     end,
+    
     set_badges = function (self, card, badges)
-        SMODS.create_mod_badges({ mod = SMODS.find_mod("finity")[1] }, badges)
+        local finity_mod = SMODS.find_mod("finity")
+        if finity_mod and finity_mod[1] then
+            SMODS.create_mod_badges({ mod = finity_mod[1] }, badges)
+        end
     end,
 }
 
