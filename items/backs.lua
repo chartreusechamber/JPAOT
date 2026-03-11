@@ -87,11 +87,13 @@ SMODS.Back({
     end,
 
     calculate = function(self, back, context)
-        if context.individual and context.cardarea == G.play and not context.scoring_hand then
-            return {
-                mult = 3,
-                card = context.other_card
-            }
+        if context.individual and context.cardarea == 'unscored' then
+            
+           
+                return { 
+                    mult = 3,
+                    card = context.other_card 
+                }
         end
     end
 })
