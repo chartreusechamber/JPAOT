@@ -56,71 +56,23 @@ function get_new_boss()
 end
 
 
-SMODS.Back {
+SMODS.Back({
     key = "pica",
     atlas = "gauntlet",
-    pos = {x = 0, y = 0},
+    pos = { x = 2, y = 0 },
     config = {
-    jokers = {
-      'j_jpaot_jpenguin'
-    }
-  },
-      calculate = function(self, back, context)
-        if context.before and not context.blueprint and context.individual and context.cardarea == 'unscored' then
-            for k, v in ipairs(context.full_hand) do
-                if not SMODS.in_scoring(v, context.scoring_hand) 
-                    and SMODS.pseudorandom_probability(card, "jpaot_jpenguin", 1, card.ability.extra.chance) then
-
-                    return { mult = 4}
-                end
-            end
-        end
-} end
-
-
-local ref_get_new_boss = get_new_boss
-
-function get_new_boss()
+        jokers = { 'j_jpaot_jpenguin' },
+    },
     
-    if G.GAME.selected_back and G.GAME.selected_back.effect.center.key == 'b_jpaot_gauntlet' then
-        
-       
-        if G.GAME.round_resets.ante % G.GAME.win_ante == 0 then
-            return "bl_jpaot_jpenguin"
-        end
-
-      
-        local master_pool = {
-            "bl_jpaot_jpenguin",
-            "bl_jpaot_mole",
-            "bl_jpaot_beaver",
-            "bl_jpaot_frog",
-            "bl_jpaot_polarbear",
-            "bl_jpaot_sappy",
-            "bl_jpaot_emmy",
-            "bl_jpaot_samson",
-        }
-
-
-        if not G.GAME.jpaot_gauntlet_bag or #G.GAME.jpaot_gauntlet_bag == 0 then
-            G.GAME.jpaot_gauntlet_bag = {}
-            for _, boss_key in ipairs(master_pool) do
-                table.insert(G.GAME.jpaot_gauntlet_bag, boss_key)
-            end
+    calculate = function(self, back, context)
+        if context.individual and context.cardarea == 'unscored' then
+            
            
+                return { 
+                    mult = 4,
+                    card = context.other_card 
+                }
         end
-
-       
-        local seed = 'gauntlet_boss_' .. G.GAME.round_resets.ante
-        local index = math.ceil(pseudorandom(seed) * #G.GAME.jpaot_gauntlet_bag)
-        
-        local selected_boss = G.GAME.jpaot_gauntlet_bag[index]
-        
-   
-        table.remove(G.GAME.jpaot_gauntlet_bag, index)
-
-        return selected_boss
     end
+})
 
-    return ref_get_new_boss()
-end
