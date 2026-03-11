@@ -60,19 +60,38 @@ SMODS.Back({
     key = "pica",
     atlas = "gauntlet",
     pos = { x = 2, y = 0 },
+
     config = {
-        jokers = { 'j_jpaot_jpenguin' },
+        jokers = { "j_jpaot_jpenguin" },
     },
-    
+
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            blocking = false,
+            func = function()
+                if not (G.jokers and G.jokers.cards) then
+                    return false
+                end
+
+                for _, card in ipairs(G.jokers.cards) do
+                    if card.config and card.config.center
+                    and card.config.center.key == "j_jpaot_jpenguin" then
+                        card:set_eternal(true)
+                        return true
+                    end
+                end
+
+                return false
+            end
+        }))
+    end,
+
     calculate = function(self, back, context)
-        if context.individual and context.cardarea == 'unscored' then
-            
-           
-                return { 
-                    mult = 4,
-                    card = context.other_card 
-                }
+        if context.individual and context.cardarea == G.play and not context.scoring_hand then
+            return {
+                mult = 3,
+                card = context.other_card
+            }
         end
     end
 })
-
