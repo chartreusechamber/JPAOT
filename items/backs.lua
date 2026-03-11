@@ -65,7 +65,19 @@ SMODS.Back {
       'j_jpaot_jpenguin'
     }
   },
-}
+      calculate = function(self, back, context)
+        if context.before and not context.blueprint and context.individual and context.cardarea == 'unscored' then
+            for k, v in ipairs(context.full_hand) do
+                if not SMODS.in_scoring(v, context.scoring_hand) 
+                    and SMODS.pseudorandom_probability(card, "jpaot_jpenguin", 1, card.ability.extra.chance) then
+
+                    return { mult = 4}
+                end
+            end
+        end
+} end
+
+
 local ref_get_new_boss = get_new_boss
 
 function get_new_boss()
