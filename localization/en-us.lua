@@ -12,7 +12,17 @@ return {
                     "Face {C:attention}Jade Penguin{} on Ante 8",
                 },
             },
-           
+
+            b_jpaot_pica = {
+                name = "Pica Deck",
+                text = {
+                "Start with",
+                "an Eternal {C:attention}Jade Penguin{}",
+                "Played but unscored cards",
+                "give {C:mult}+4{} mult",
+            },
+        },
+
 
         },
 
