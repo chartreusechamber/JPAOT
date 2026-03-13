@@ -19,7 +19,7 @@ return {
                 "Start with",
                 "an Eternal {C:attention}Jade Penguin{}",
                 "Played but unscored cards",
-                "give {C:mult}+3{} mult",
+                "give {C:mult}+3{} Mult",
             },
         },
 
